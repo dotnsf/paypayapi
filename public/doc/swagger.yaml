@@ -1,0 +1,135 @@
+swagger: '2.0'
+info:
+  description: PayPay サンプル APIs
+  version: 0.0.1
+  title: PayPay Sample APIs
+host: localhost:8080
+basePath: /paypay
+tags:
+  - name: qrcode
+    description: QRCode related APIs
+  - name: payment
+    description: Payment related APIs
+schemes:
+  - http
+  - https
+paths:
+  /qrcode:
+    post:
+      tags:
+        - qrcode
+      summary: QRコード生成
+      description: QRコード生成
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/QRCodeCreateRequest'
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+  /QRCode/{codeId}:
+    delete:
+      tags:
+        - qrcode
+      summary: QRコード削除
+      description: QRコード削除
+      produces:
+        - application/json
+      parameters:
+        - name: codeId
+          in: path
+          type: string
+          description: QRコードID
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+  /payment/confirm/{marchantPaymentId}:
+    get:
+      tags:
+        - payment
+      summary: 確認
+      description: 確認
+      produces:
+        - application/json
+      parameters:
+        - name: marchantPaymentId
+          in: path
+          type: string
+          description: 注文ID
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+  /payment/cancel/{marchantPaymentId}:
+    post:
+      tags:
+        - payment
+      summary: 確認
+      description: 確認
+      produces:
+        - application/json
+      parameters:
+        - name: marchantPaymentId
+          in: path
+          type: string
+          description: 注文ID
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+  /payment/refund/{marchantPaymentId}:
+    post:
+      tags:
+        - payment
+      summary: 確認
+      description: 確認
+      produces:
+        - application/json
+      parameters:
+        - name: marchantPaymentId
+          in: path
+          type: string
+          description: 注文ID
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/PaymentRefundRequest'
+      responses:
+        '200':
+          description: 成功
+        '400':
+          description: エラー
+definitions:
+  QRCodeCreateRequest:
+    type: object
+    properties:
+      amount:
+        type: integer
+        description: 額（JPY）
+      orderDescription:
+        type: string
+        description: 注文内容
+      userAgent:
+        type: string
+        description: UserAgent 値
+  PaymentRefundRequest:
+    type: object
+    properties:
+      paymentId:
+        type: string
+        description: Payment ID
+      amount:
+        type: integer
+        description: 額（JPY）
+      reason:
+        type: string
+        description: 理由
