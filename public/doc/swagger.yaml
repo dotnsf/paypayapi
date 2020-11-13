@@ -50,7 +50,7 @@ paths:
           description: 成功
         '400':
           description: エラー
-  /payment/confirm/{marchantPaymentId}:
+  /payment/confirm/{merchantPaymentId}:
     get:
       tags:
         - payment
@@ -59,7 +59,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: marchantPaymentId
+        - name: merchantPaymentId
           in: path
           type: string
           description: 注文ID
@@ -68,7 +68,7 @@ paths:
           description: 成功
         '400':
           description: エラー
-  /payment/cancel/{marchantPaymentId}:
+  /payment/cancel/{merchantPaymentId}:
     post:
       tags:
         - payment
@@ -77,7 +77,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: marchantPaymentId
+        - name: merchantPaymentId
           in: path
           type: string
           description: 注文ID
@@ -86,7 +86,7 @@ paths:
           description: 成功
         '400':
           description: エラー
-  /payment/refund/{marchantPaymentId}:
+  /payment/refund/{merchantPaymentId}:
     post:
       tags:
         - payment
@@ -95,7 +95,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: marchantPaymentId
+        - name: merchantPaymentId
           in: path
           type: string
           description: 注文ID

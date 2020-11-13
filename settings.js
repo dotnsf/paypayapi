@@ -1,5 +1,5 @@
 exports.apikey = '';
 exports.apisecret = '';
-exports.marchantid = '';
+exports.merchantid = '';
 exports.productionMode = false;
 

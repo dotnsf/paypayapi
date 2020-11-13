@@ -10,7 +10,7 @@ var PAYPAY = require( '@paypayopa/paypayopa-sdk-node' );
 PAYPAY.Configure({
   clientId: settings.apikey,
   clientSecret: settings.apisecret,
-  merchantId: settings.marchantid,
+  merchantId: settings.merchantid,
   productionMode: settings.productionMode
 });
 
@@ -72,11 +72,11 @@ router.delete( '/qrcode/:codeId', function( req, res ){
   }
 });
 
-router.get( '/payment/confirm/:marchantPaymentId', function( req, res ){
+router.get( '/payment/confirm/:merchantPaymentId', function( req, res ){
   res.contentType( 'application/json; charset=utf-8' );
 
-  if( req.params.marchantPaymentId ){
-    PAYPAY.GetCodePaymentDetails( Array( req.params.marchantPaymentId ), function( response ){
+  if( req.params.merchantPaymentId ){
+    PAYPAY.GetCodePaymentDetails( Array( req.params.merchantPaymentId ), function( response ){
       //console.log( response );
       if( response.STATUS && response.STATUS >= 200 && response.STATUS < 300 ){   //. 実際は 201
         res.write( JSON.stringify( { status: response.STATUS, body: JSON.parse( response.BODY ) } ) );
@@ -89,16 +89,16 @@ router.get( '/payment/confirm/:marchantPaymentId', function( req, res ){
     });
   }else{
     res.status( 400 );
-    res.write( JSON.stringify( { status: 400, error: 'no marchantPaymentId info found.' } ) );
+    res.write( JSON.stringify( { status: 400, error: 'no merchantPaymentId info found.' } ) );
     res.end();
   }
 });
 
-router.post( '/payment/cancel/:marchantPaymentId', function( req, res ){
+router.post( '/payment/cancel/:merchantPaymentId', function( req, res ){
   res.contentType( 'application/json; charset=utf-8' );
 
-  if( req.params.marchantPaymentId ){
-    PAYPAY.PaymentCancel( Array( req.params.marchantPaymentId ), function( response ){
+  if( req.params.merchantPaymentId ){
+    PAYPAY.PaymentCancel( Array( req.params.merchantPaymentId ), function( response ){
       //console.log( response );
       if( response.STATUS && response.STATUS >= 200 && response.STATUS < 300 ){   //. 実際は 201
         res.write( JSON.stringify( { status: response.STATUS, body: JSON.parse( response.BODY ) } ) );
@@ -111,17 +111,17 @@ router.post( '/payment/cancel/:marchantPaymentId', function( req, res ){
     });
   }else{
     res.status( 400 );
-    res.write( JSON.stringify( { status: 400, error: 'no marchantPaymentId info found.' } ) );
+    res.write( JSON.stringify( { status: 400, error: 'no merchantPaymentId info found.' } ) );
     res.end();
   }
 });
 
-router.post( '/payment/refund/:marchantPaymentId', function( req, res ){
+router.post( '/payment/refund/:merchantPaymentId', function( req, res ){
   res.contentType( 'application/json; charset=utf-8' );
 
-  if( req.params.marchantPaymentId ){
+  if( req.params.merchantPaymentId ){
     var payload = {
-      merchantPaymentId: req.params.marchantPaymentId,
+      merchantPaymentId: req.params.merchantPaymentId,
       paymentId: req.body.paymentId,
       amount: { amount: req.body.amount, currency: "JPY" },
       reason: req.body.reason
@@ -139,7 +139,7 @@ router.post( '/payment/refund/:marchantPaymentId', function( req, res ){
     });
   }else{
     res.status( 400 );
-    res.write( JSON.stringify( { status: 400, error: 'no marchantPaymentId info found.' } ) );
+    res.write( JSON.stringify( { status: 400, error: 'no merchantPaymentId info found.' } ) );
     res.end();
   }
 });
