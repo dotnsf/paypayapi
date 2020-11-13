@@ -42,11 +42,11 @@ html, body{
   <table class="table table-bordered">
     <tbody>
       <tr>
-        <td>amount(JPY)</td>
+        <td>支払額（円）</td>
         <td><input type="text" id="amount" value="100"/></td>
       </tr>
       <tr>
-        <td>description</td>
+        <td>明細</td>
         <td><input type="text" id="orderDescription" value="" placeholder="書籍代"/></td>
       </tr>
       <tr>
@@ -75,11 +75,12 @@ function createQRCode(){
       success: function( result ){
         console.log( result );
         if( result && result.status && result.status == 201 && result.body && result.body.data ){
-          var merchantPaymentId = result.body.data.merchantPaymentId;
-          var codeId = result.body.data.codeId;
-          var url = result.body.data.url;
+          var merchantPaymentId = result.body.data.merchantPaymentId; //. 支払いID(キャンセル時に必要）
+          var codeId = result.body.data.codeId; //. QRコードID（QRコード削除時に必要）
+          var url = result.body.data.url;  //. QRコードが表示されるページの URL
 
           if( url ){
+            //. QRコードが表示されるページを別ウィンドウで開く
             window.open( url, 'PayPayWindow' );
           }
         }
